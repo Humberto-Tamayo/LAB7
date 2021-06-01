@@ -51,6 +51,14 @@ void main(void){
 //    TRISB=0;  			/* Set as output port */
 //    LATB = 0xff;  		/* Send high on PortB */
     
+    int mill = 0;
+    int mill/10 = 0;
+    int mill/100 = 0;
+    int mil = 0;
+    int cent = 0;
+    int dec = 0;
+    int unit = 0;
+    
     int counter = 0;
     
 
@@ -108,6 +116,24 @@ void main(void){
             counter = counter + 1;
         }
         counter = 0;
+        
+        if (TMR1) {
+            int mill = TMR0 % 1000000;
+            int mill/10 = TMR0 % 100000;
+            int mill/100 = TMR0 % 10000;
+            int mil = TMR0 % 1000;
+            int cent = TMR0 % 100;
+            int dec = TMR0 % 10;
+            int unit = TMR0 % 1;
+            
+            LCD_cmd (0xC0);
+            //send2LCD(0xmill + 0x30); // N
+
+           
+            TMR1 = 0;
+            TMR0 = 0;
+        }
+
     }
 }
 
